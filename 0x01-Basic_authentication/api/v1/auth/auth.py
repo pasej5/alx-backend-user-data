@@ -10,7 +10,6 @@ from typing import (
 )
 
 
-
 class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
@@ -22,8 +21,18 @@ class Auth:
         Return:
             False if the path is included in excluded_paths
         """
-        pass
-    
+        return path not in excluded_paths
+
+    def authorization_header(self, request=None) -> str:
+        """
+        Generate the authorization header for the current user.
+        This method should be implemented according to your
+        authentication logic.
+        Returns:
+            The authorization header as a string.
+        """
+        return None
+
     def current_user(self, request=None) -> TypeVar('User'):
         """
         Current user method
