@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-Auth class to manage the API authentication.
+Definition of class Auth
 """
-
 from flask import request
 from typing import (
     List,
@@ -11,19 +10,23 @@ from typing import (
 
 
 class Auth:
+    """
+    Manages the API authentication
+    """
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
-        this checks whether a given path requires Auth or not
+        Determines whether a given path requires authentication or not
         Args:
-            - path (str): URL path to be checked
-            - excluded_paths (List of str): List of paths
-                that do not require authentication
+            - path(str): Url path to be checked
+            - excluded_paths(List of str): List of paths that do not require
+              authentication
         Return:
-            - True if the path requires authentication, else False
+            - True if path is not in excluded_paths, else False
         """
         if path is None:
             return True
-        elif excluded_paths in None or excluded_paths == []:
+        elif excluded_paths is None or excluded_paths == []:
             return True
         elif path in excluded_paths:
             return False
@@ -36,24 +39,21 @@ class Auth:
                 if i[-1] == "*":
                     if path.startswith(i[:-1]):
                         return False
-                return True
+        return True
 
     def authorization_header(self, request=None) -> str:
         """
-        Generate the authorization header for the current user.
-        This method should be implemented according to your
-        authentication logic.
-        Returns:
-            The authorization header as a string.
+        Returns the authorization header from a request object
         """
-        return None
+        if request is None:
+            return None
+        header = request.headers.get('Authorization')
+        if header is None:
+            return None
+        return header
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
-        Current user method
-        Args:
-            self
-        Returns:
-            None
+        Returns a User instance from information from a request object
         """
         return None
