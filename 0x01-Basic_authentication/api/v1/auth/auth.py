@@ -15,11 +15,11 @@ class Auth:
         """
         this checks whether a given path requires Auth or not
         Args:
-            path of the auth, thie is the url to be checked
-            exluded_path, this is a list of paths that dont require
-            Authentication
+            - path (str): URL path to be checked
+            - excluded_paths (List of str): List of paths
+                that do not require authentication
         Return:
-            False if the path is included in excluded_paths
+            - True if the path requires authentication, else False
         """
         if path is None:
             return True
@@ -27,10 +27,17 @@ class Auth:
             return True
         elif path in excluded_paths:
             return False
-        
-        
-        return path not in excluded_paths
-
+        else:
+            for i in excluded_paths:
+                if i.startswith(path):
+                    return False
+                if path.startswith(i):
+                    return False
+                if i[-1] == "*":
+                    if path.startswith(i[:-1]):
+                        return False
+                return True
+            
     def authorization_header(self, request=None) -> str:
         """
         Generate the authorization header for the current user.
