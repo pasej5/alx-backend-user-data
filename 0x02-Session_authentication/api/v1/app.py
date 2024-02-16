@@ -41,7 +41,10 @@ def bef_req():
             if auth.current_user(request) is None:
                 abort(403, description="Forbidden")
 
-    request.current_user = auth.current_user(request)
+        current_user = auth.current_user
+        if current_user is None:
+            abort(403)
+        request.current_user = current_user(request)
 
 
 @app.errorhandler(404)
