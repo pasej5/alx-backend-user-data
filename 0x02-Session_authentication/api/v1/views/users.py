@@ -28,7 +28,13 @@ def view_one_user(user_id: str = None) -> str:
     """
     if user_id is None:
         abort(404)
-    user = User.get(user_id)
+    if user_id == 'me' and request.current_user is None:
+        abort(404)
+        user: TypeVar('User') = User()
+    if user_id == 'me' and request.current_user is not None:
+        return jsonify(request.current_user.json())
+
+        user = User.get(user_id)
     if user is None:
         abort(404)
     return jsonify(user.to_json())
@@ -45,11 +51,6 @@ def delete_user(user_id: str = None) -> str:
     """
     if user_id is None:
         abort(404)
-    if user_id == 'me' and request.current_user is None:
-        abort(404)
-    user: TypeVar('User') = User()
-    if user_id == 'me' and request.current_user is not None:
-        return jsonify(request.current_user.json())
 
     user = User.get(user_id)
     if user is None:
