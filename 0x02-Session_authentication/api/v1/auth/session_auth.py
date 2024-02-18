@@ -21,7 +21,7 @@ class SessionAuth(Auth):
             Return:
                 Session ID
         """
-        if user_id is None or type(user_id) is not str:
+        if user_id is None or not isinstance(user_id, str):
             return None
 
         session_id: str = str(uuid4())
@@ -39,7 +39,7 @@ class SessionAuth(Auth):
             Return:
                 User ID
         """
-        if session_id is None or type(session_id) is not str:
+        if session_id is None or not isinstance(session_id, str):
             return None
 
         user_id: str = self.user_id_by_session_id.get(session_id)

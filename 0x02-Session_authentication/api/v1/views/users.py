@@ -59,6 +59,19 @@ def delete_user(user_id: str = None) -> str:
     return jsonify({}), 200
 
 
+@app_views.route('/users/me', methods=['GET'], strict_slashes=False)
+def get_current_user() -> str:
+    """
+    GET /api/v1/users/me
+    Return:
+      - User object JSON represented
+      - 404 if no current user is authenticated
+    """
+    if request.current_user is None:
+        abort(404)
+    return jsonify(request.current_user.to_json)
+
+
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user() -> str:
     """ POST /api/v1/users/
