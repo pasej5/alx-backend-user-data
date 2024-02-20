@@ -38,8 +38,8 @@ class DB:
         Args:
             email: user email
             hashed_password: user pasword hashed
-        Return:
-            User.
+        Returns:
+            User: The newly created user object
         """
         new_user = User(email=email, hashed_password=hashed_password)
         self._session.add(new_user)
