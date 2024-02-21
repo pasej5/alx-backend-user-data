@@ -18,7 +18,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -33,27 +33,19 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """
-        The user method adds a new user to the database
-        Args:
-            email: user email
-            hashed_password: user pasword hashed
-        Returns:
-            User: The newly created user object
+        """_summary_
         """
         new_user = User(email=email, hashed_password=hashed_password)
+        # add new user and commit to database
         self._session.add(new_user)
         self._session.commit()
         return new_user
 
     def find_user_by(self, **kwargs) -> User:
-        """
-        Method that takes keyword Argumentsand return first row of
-        User.
-        Args:
-            **kwargs
+        """_summary_
+
         Returns:
-            User: description
+            User: _description_
         """
         if not kwargs:
             raise InvalidRequestError
@@ -64,11 +56,10 @@ class DB:
         return user
 
     def update_user(self, user_id: int, **kwargs) -> None:
-        """
-        Using find_user_by to locate and update the user
+        """_summary_
+
         Args:
-            user_id,
-            **kwargs
+            user_id (int): _description_
         """
         user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
