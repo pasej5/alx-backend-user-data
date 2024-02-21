@@ -47,7 +47,20 @@ class Auth:
         self._db = DB()
 
     def register_user(self, email: str, password: str) -> Union[None, User]:
-        """_summary_
+        """
+        Registers a new user if the user with the given email
+        does not exist.
+
+        Args:
+            email: The email of the user to register.
+            password: The password of the user.
+
+        Returns:
+            User: The newly registered user.
+
+        Raises:
+            ValueError: If the user with the given email already
+            exists.
         """
         try:
             # find the user with the given email
