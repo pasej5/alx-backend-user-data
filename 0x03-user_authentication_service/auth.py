@@ -184,3 +184,4 @@ def destroy_session(self, user_id: str) -> None:
     else:
         user.session_id = None
         return None
+
