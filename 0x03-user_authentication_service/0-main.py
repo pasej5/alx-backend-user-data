@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-End-to-end integration test
+Main file
 """
 from user import User
 
