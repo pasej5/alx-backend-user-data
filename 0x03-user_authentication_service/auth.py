@@ -169,3 +169,18 @@ class Auth:
             user.hashed_password = _hash_password(password)
             user.reset_token = None
             return None
+
+
+def destroy_session(self, user_id: str) -> None:
+    """_destry the session_
+
+    Args:
+        user_id (str): _description_
+    """
+    try:
+        user = self._db.find_user_by(id=user_id)
+    except NoResultFound:
+        return None
+    else:
+        user.session_id = None
+        return None
